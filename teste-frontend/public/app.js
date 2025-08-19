@@ -1,5 +1,6 @@
 const API_URL = "http://localhost:3000/tarefas";
 
+// Criar nova tarefa
 document.getElementById('btn-criar').addEventListener('click', () => {
   const titulo = document.getElementById('titulo').value;
   const descricao = document.getElementById('descricao').value;
@@ -12,6 +13,7 @@ document.getElementById('btn-criar').addEventListener('click', () => {
   }).then(() => carregarTarefas());
 });
 
+// Buscar tarefa por ID
 document.getElementById('btn-buscar').addEventListener('click', () => {
   const id = document.getElementById('busca-id').value;
   fetch(`${API_URL}/${id}`)
@@ -22,6 +24,7 @@ document.getElementById('btn-buscar').addEventListener('click', () => {
     });
 });
 
+// Carregar todas as tarefas
 function carregarTarefas() {
   fetch(API_URL)
     .then(res => res.json())
@@ -49,17 +52,20 @@ function carregarTarefas() {
     });
 }
 
+// Alterar status da tarefa para "concluída"
 function alterarStatus(id) {
   fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status: "concluída" })
-  }).then(() => carregarTarefas());
+  }).then(() => carregarTarefas());  // Atualiza as tarefas após a alteração
 }
 
+// Excluir tarefa
 function excluirTarefa(id) {
   fetch(`${API_URL}/${id}`, { method: "DELETE" })
-    .then(() => carregarTarefas());
+    .then(() => carregarTarefas());  // Atualiza as tarefas após a exclusão
 }
 
+// Inicializa a página carregando as tarefas
 carregarTarefas();
